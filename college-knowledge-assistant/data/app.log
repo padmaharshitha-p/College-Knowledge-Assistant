@@ -1,0 +1,291 @@
+2026-10-09 14:36:51 | ERROR | college_knowledge_assistant | Document indexing failed for DM Lecture notes.pdf
+Traceback (most recent call last):
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\httpx\_transports\default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\httpx\_transports\default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\httpcore\_sync\connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\httpcore\_sync\connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+        pool_request.request
+    )
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\httpcore\_sync\connection.py", line 101, in handle_request
+    raise exc
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\httpcore\_sync\connection.py", line 78, in handle_request
+    stream = self._connect(request)
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\httpcore\_sync\connection.py", line 156, in _connect
+    stream = stream.start_tls(**kwargs)
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\httpcore\_backends\sync.py", line 154, in start_tls
+    with map_exceptions(exc_map):
+         ~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\harsh\AppData\Local\Python\pythoncore-3.13-64\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\httpcore\_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: [WinError 10054] An existing connection was forcibly closed by the remote host
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\harsh\College\college-knowledge-assistant\services\document_service.py", line 79, in index_pdf_upload
+    vector_ids = self.vector_store.add_documents(
+        document_id=doc_id,
+    ...<9 lines>...
+        },
+    )
+  File "C:\Users\harsh\College\college-knowledge-assistant\services\vector_store_service.py", line 42, in add_documents
+    self.collection.add(documents=documents, metadatas=metadatas, ids=ids)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\chromadb\api\models\Collection.py", line 80, in add
+    add_request = self._validate_and_prepare_add_request(
+        ids=ids,
+    ...<4 lines>...
+        uris=uris,
+    )
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\chromadb\api\models\CollectionCommon.py", line 95, in wrapper
+    return func(self, *args, **kwargs)
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\chromadb\api\models\CollectionCommon.py", line 225, in _validate_and_prepare_add_request
+    add_embeddings = self._embed_record_set(record_set=add_records)
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\chromadb\api\models\CollectionCommon.py", line 551, in _embed_record_set
+    return self._embed(input=record_set[field])  # type: ignore[literal-required]
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\chromadb\api\models\CollectionCommon.py", line 565, in _embed
+    return config_ef(input=input)
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\chromadb\api\types.py", line 554, in __call__
+    result = call(self, input)
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\chromadb\utils\embedding_functions\__init__.py", line 112, in __call__
+    return ONNXMiniLM_L6_V2()(input)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\chromadb\api\types.py", line 554, in __call__
+    result = call(self, input)
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\chromadb\utils\embedding_functions\onnx_mini_lm_l6_v2.py", line 270, in __call__
+    self._download_model_if_not_exists()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\chromadb\utils\embedding_functions\onnx_mini_lm_l6_v2.py", line 308, in _download_model_if_not_exists
+    self._download(
+    ~~~~~~~~~~~~~~^
+        url=self.MODEL_DOWNLOAD_URL,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        fname=os.path.join(self.DOWNLOAD_PATH, self.ARCHIVE_FILENAME),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\tenacity\__init__.py", line 404, in wrapped_f
+    return copy(f, *args, **kw)
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\tenacity\__init__.py", line 550, in __call__
+    do = self.iter(retry_state=retry_state)
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\tenacity\__init__.py", line 440, in iter
+    result = action(retry_state)
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\tenacity\__init__.py", line 462, in <lambda>
+    self._add_action_func(lambda rs: rs.outcome.result())
+                                     ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\harsh\AppData\Local\Python\pythoncore-3.13-64\Lib\concurrent\futures\_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\harsh\AppData\Local\Python\pythoncore-3.13-64\Lib\concurrent\futures\_base.py", line 402, in __get_result
+    raise self._exception
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\tenacity\__init__.py", line 553, in __call__
+    result = fn(*args, **kwargs)
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\chromadb\utils\embedding_functions\onnx_mini_lm_l6_v2.py", line 107, in _download
+    with httpx.stream("GET", url) as resp:
+         ~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\harsh\AppData\Local\Python\pythoncore-3.13-64\Lib\contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\httpx\_api.py", line 159, in stream
+    with client.stream(
+         ~~~~~~~~~~~~~^
+        method=method,
+        ^^^^^^^^^^^^^^
+    ...<8 lines>...
+        follow_redirects=follow_redirects,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ) as response:
+    ^
+  File "C:\Users\harsh\AppData\Local\Python\pythoncore-3.13-64\Lib\contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\httpx\_client.py", line 868, in stream
+    response = self.send(
+        request=request,
+    ...<2 lines>...
+        stream=True,
+    )
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\httpx\_client.py", line 914, in send
+    response = self._send_handling_auth(
+        request,
+    ...<2 lines>...
+        history=[],
+    )
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\httpx\_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+        request,
+        follow_redirects=follow_redirects,
+        history=history,
+    )
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\httpx\_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\httpx\_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\httpx\_transports\default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+         ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\harsh\AppData\Local\Python\pythoncore-3.13-64\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\httpx\_transports\default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [WinError 10054] An existing connection was forcibly closed by the remote host in add.
+2026-10-09 14:37:02 | ERROR | college_knowledge_assistant | Document indexing failed for DM Lecture notes.pdf
+Traceback (most recent call last):
+  File "C:\Users\harsh\College\college-knowledge-assistant\services\document_service.py", line 79, in index_pdf_upload
+    vector_ids = self.vector_store.add_documents(
+        document_id=doc_id,
+    ...<9 lines>...
+        },
+    )
+  File "C:\Users\harsh\College\college-knowledge-assistant\services\vector_store_service.py", line 42, in add_documents
+    self.collection.add(documents=documents, metadatas=metadatas, ids=ids)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\chromadb\api\models\Collection.py", line 89, in add
+    self._client._add(
+    ~~~~~~~~~~~~~~~~~^
+        collection_id=self.id,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        database=self.database,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\chromadb\api\rust.py", line 407, in _add
+    return self.bindings.add(
+           ~~~~~~~~~~~~~~~~~^
+        ids,
+        ^^^^
+    ...<6 lines>...
+        database,
+        ^^^^^^^^^
+    )
+    ^
+TypeError: argument 'metadatas': failed to extract enum MetadataValue ('Bool | Int | Float | Str')
+- variant Bool (Bool): TypeError: failed to extract field MetadataValue::Bool.0, caused by TypeError: 'NoneType' object cannot be converted to 'PyBool'
+- variant Int (Int): TypeError: failed to extract field MetadataValue::Int.0, caused by TypeError: 'NoneType' object cannot be interpreted as an integer
+- variant Float (Float): TypeError: failed to extract field MetadataValue::Float.0, caused by TypeError: must be real number, not NoneType
+- variant Str (Str): TypeError: failed to extract field MetadataValue::Str.0, caused by TypeError: 'NoneType' object cannot be converted to 'PyString'
+2026-10-09 14:39:43 | ERROR | college_knowledge_assistant | Document indexing failed for paiunit-1.pdf
+Traceback (most recent call last):
+  File "C:\Users\harsh\College\college-knowledge-assistant\services\document_service.py", line 79, in index_pdf_upload
+    vector_ids = self.vector_store.add_documents(
+        document_id=doc_id,
+    ...<9 lines>...
+        },
+    )
+  File "C:\Users\harsh\College\college-knowledge-assistant\services\vector_store_service.py", line 42, in add_documents
+    self.collection.add(documents=documents, metadatas=metadatas, ids=ids)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\chromadb\api\models\Collection.py", line 89, in add
+    self._client._add(
+    ~~~~~~~~~~~~~~~~~^
+        collection_id=self.id,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        database=self.database,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\chromadb\api\rust.py", line 407, in _add
+    return self.bindings.add(
+           ~~~~~~~~~~~~~~~~~^
+        ids,
+        ^^^^
+    ...<6 lines>...
+        database,
+        ^^^^^^^^^
+    )
+    ^
+TypeError: argument 'metadatas': failed to extract enum MetadataValue ('Bool | Int | Float | Str')
+- variant Bool (Bool): TypeError: failed to extract field MetadataValue::Bool.0, caused by TypeError: 'NoneType' object cannot be converted to 'PyBool'
+- variant Int (Int): TypeError: failed to extract field MetadataValue::Int.0, caused by TypeError: 'NoneType' object cannot be interpreted as an integer
+- variant Float (Float): TypeError: failed to extract field MetadataValue::Float.0, caused by TypeError: must be real number, not NoneType
+- variant Str (Str): TypeError: failed to extract field MetadataValue::Str.0, caused by TypeError: 'NoneType' object cannot be converted to 'PyString'
+2026-10-09 14:40:54 | ERROR | college_knowledge_assistant | Document indexing failed for paiunit-1.pdf
+Traceback (most recent call last):
+  File "C:\Users\harsh\College\college-knowledge-assistant\services\document_service.py", line 79, in index_pdf_upload
+    vector_ids = self.vector_store.add_documents(
+        document_id=doc_id,
+    ...<9 lines>...
+        },
+    )
+  File "C:\Users\harsh\College\college-knowledge-assistant\services\vector_store_service.py", line 42, in add_documents
+    self.collection.add(documents=documents, metadatas=metadatas, ids=ids)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\chromadb\api\models\Collection.py", line 89, in add
+    self._client._add(
+    ~~~~~~~~~~~~~~~~~^
+        collection_id=self.id,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        database=self.database,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\chromadb\api\rust.py", line 407, in _add
+    return self.bindings.add(
+           ~~~~~~~~~~~~~~~~~^
+        ids,
+        ^^^^
+    ...<6 lines>...
+        database,
+        ^^^^^^^^^
+    )
+    ^
+TypeError: argument 'metadatas': failed to extract enum MetadataValue ('Bool | Int | Float | Str')
+- variant Bool (Bool): TypeError: failed to extract field MetadataValue::Bool.0, caused by TypeError: 'NoneType' object cannot be converted to 'PyBool'
+- variant Int (Int): TypeError: failed to extract field MetadataValue::Int.0, caused by TypeError: 'NoneType' object cannot be interpreted as an integer
+- variant Float (Float): TypeError: failed to extract field MetadataValue::Float.0, caused by TypeError: must be real number, not NoneType
+- variant Str (Str): TypeError: failed to extract field MetadataValue::Str.0, caused by TypeError: 'NoneType' object cannot be converted to 'PyString'
+2026-10-09 15:37:34 | ERROR | college_knowledge_assistant | Document indexing failed for tmp_upload_test.pdf
+Traceback (most recent call last):
+  File "c:\Users\harsh\College\college-knowledge-assistant\services\document_service.py", line 79, in index_pdf_upload
+    vector_ids = self.vector_store.add_documents(
+        document_id=doc_id,
+    ...<9 lines>...
+        },
+    )
+  File "c:\Users\harsh\College\college-knowledge-assistant\services\vector_store_service.py", line 42, in add_documents
+    self.collection.add(documents=documents, metadatas=metadatas, ids=ids)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\chromadb\api\models\Collection.py", line 89, in add
+    self._client._add(
+    ~~~~~~~~~~~~~~~~~^
+        collection_id=self.id,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        database=self.database,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\Users\harsh\College\college-knowledge-assistant\.venv\Lib\site-packages\chromadb\api\rust.py", line 407, in _add
+    return self.bindings.add(
+           ~~~~~~~~~~~~~~~~~^
+        ids,
+        ^^^^
+    ...<6 lines>...
+        database,
+        ^^^^^^^^^
+    )
+    ^
+TypeError: argument 'metadatas': failed to extract enum MetadataValue ('Bool | Int | Float | Str')
+- variant Bool (Bool): TypeError: failed to extract field MetadataValue::Bool.0, caused by TypeError: 'NoneType' object cannot be converted to 'PyBool'
+- variant Int (Int): TypeError: failed to extract field MetadataValue::Int.0, caused by TypeError: 'NoneType' object cannot be interpreted as an integer
+- variant Float (Float): TypeError: failed to extract field MetadataValue::Float.0, caused by TypeError: must be real number, not NoneType
+- variant Str (Str): TypeError: failed to extract field MetadataValue::Str.0, caused by TypeError: 'NoneType' object cannot be converted to 'PyString'
+2026-10-09 15:39:28 | INFO | college_knowledge_assistant | Indexed document tmp_upload_test_47b346fd2f8b4833a2f671dea9e86492.pdf with 1 chunks
+2026-10-09 15:39:55 | INFO | college_knowledge_assistant | Indexed document tmp_upload_smoke.pdf with 1 chunks
+2026-10-09 15:42:38 | INFO | college_knowledge_assistant | Indexed document paiunit-1.pdf with 48 chunks
+2026-10-09 15:52:04 | INFO | college_knowledge_assistant | Indexed document tmp_upload_test_50cf7461c23e44948915c42e52d37c4a.pdf with 1 chunks
+2026-10-09 15:52:38 | INFO | college_knowledge_assistant | Indexed document tmp_upload_test_1a60528a7d944a54b29789c79c523d3c.pdf with 1 chunks
+2026-10-09 15:57:22 | INFO | college_knowledge_assistant | Indexed document paiunit-1.pdf with 48 chunks
+2026-10-09 15:59:36 | INFO | college_knowledge_assistant | Indexed document tmp_upload_test_07bf00c6847c48bda5db3d8a73925b51.pdf with 1 chunks
+2026-10-09 16:01:47 | INFO | college_knowledge_assistant | Indexed document paiunit-1.pdf with 48 chunks
+2026-10-09 16:04:34 | INFO | college_knowledge_assistant | Indexed document UNIT 1 -CN.pdf with 51 chunks
